@@ -1,235 +1,170 @@
-/**
-* Template Name: DevFolio
-* Updated: Jul 27 2023 with Bootstrap v5.3.1
-* Template URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function() {
-  "use strict";
+/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+particlesJS.load("particles-js", "assets/particles.json", function () {
+  console.log("callback - particles.js config loaded");
+});
 
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
+/* ============= counter number animation ================ */
+function animate(obj, initVal, lastVal, duration) {
+  let startTime = null;
+
+  //get the current timestamp and assign it to the currentTime variable
+  let currentTime = Date.now();
+
+  //pass the current timestamp to the step function
+  const step = (currentTime) => {
+    //if the start time is null, assign the current time to startTime
+    if (!startTime) {
+      startTime = currentTime;
+    }
+
+    //calculate the value to be used in calculating the number to be displayed
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+
+    //calculate what to be displayed using the value gotten above
+    obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
+
+    //checking to make sure the counter does not exceed the last value (lastVal)
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
     } else {
-      return document.querySelector(el)
+      window.cancelAnimationFrame(window.requestAnimationFrame(step));
     }
-  }
+  };
+  //start animating
+  window.requestAnimationFrame(step);
+}
+let text1 = document.getElementById("year");
+let text2 = document.getElementById("project");
+const load = () => {
+  animate(text1, 0, 20, 7000);
+  animate(text2, 0, 100, 7000);
+};
 
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
+addEventListener("scroll", load());
 
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
+/* ======== MIXITUP FILTER PORTFOLIO ========== */
+let mixerPortfolio = mixitup(".portfolio-container", {
+  selectors: {
+    target: ".portfolio-item",
+  },
+  animation: {
+    duration: 300,
+  },
+});
 
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
-      } else {
-        navbarlink.classList.remove('active')
-      }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
+/* ============= filter Active =============== */
+let tabfilter = document.querySelectorAll(".filter-portfolio button");
 
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select('#header')
-    let offset = header.offsetHeight
+function activefilter() {
+  tabfilter.forEach((l) => l.classList.remove("active-portfolio"));
+  this.classList.add("active-portfolio");
+}
 
-    if (!header.classList.contains('header-scrolled')) {
-      offset -= 16
-    }
+tabfilter.forEach((l) => l.addEventListener("click", activefilter));
 
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: 'smooth'
-    })
-  }
-
-  /**
-   * Toggle .header-scrolled class to #header when page is scrolled
-   */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 100) {
-        selectHeader.classList.add('header-scrolled')
-      } else {
-        selectHeader.classList.remove('header-scrolled')
-      }
-    }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
-  }
-
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
-
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
-
-  /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
-
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
-
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
-
-  /**
-   * Intro type effect
-   */
-  const typed = select('.typed')
-  if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
-  }
-
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
+// Animation skills progress
+let span = $(".progress-bar span").each(function () {
+  $(this).animate(
+    {
+      width: $(this).attr("data-progress") + "%",
     },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
+    2000
+  );
+});
+
+$(".resume").scroll(span);
+
+/* ============ SCROLL SECTIONS ACTIVE LINK ============= */
+let sections = document.querySelectorAll("section[id]");
+
+function scrollActive() {
+  const scrollY = window.pageYOffset;
+
+  sections.forEach((current) => {
+    const sectionHeight = current.offsetHeight;
+    const sectionTop = current.offsetTop - 50;
+
+    let sectionId = current.getAttribute("id");
+
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      document
+        .querySelector(".nav-menu li a[href*=" + sectionId + "]")
+        .classList.add("active-link");
+    } else {
+      document
+        .querySelector(".nav-menu li a[href*=" + sectionId + "]")
+        .classList.remove("active-link");
     }
   });
+}
 
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
+window.addEventListener("scroll", scrollActive);
+
+/* ============ SCROLL SECTIONS RESUME LINK ============= */
+const resumeItem = document.querySelectorAll(".resume-item");
+
+function scrollResume() {
+  const scrollY = window.pageYOffset;
+
+  resumeItem.forEach((item) => {
+    const sectionHeight = item.offsetHeight;
+    const sectionTop = item.offsetTop + 2600;
+
+    resumeId = item.getAttribute("id");
+
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      document
+        .querySelector(".sidebar a[href*=" + resumeId + "]")
+        .classList.add("active-resume");
+    } else {
+      document
+        .querySelector(".sidebar a[href*=" + resumeId + "]")
+        .classList.remove("active-resume");
     }
   });
+}
 
-  /**
-   * Preloader
-   */
-  let preloader = select('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove()
-    });
-  }
+window.addEventListener("scroll", scrollResume);
 
-  /**
-   * Initiate Pure Counter 
-   */
-  new PureCounter();
+/* ============ Active card testimonial ============= */
+let cardsTest = document.querySelectorAll(".testimonial .card");
 
-})()
+function activeCard() {
+  cardsTest.forEach((card) => card.classList.remove("active-card"));
+  this.classList.add("active-card");
+}
+
+cardsTest.forEach((card) => card.addEventListener("click", activeCard));
+
+/* ============ Active card testimonial ============= */
+let dataId = cardsTest.forEach((card) => card.getAttribute("data-id"));
+let texts = document.querySelectorAll(".testimonial .text");
+let textId = texts.forEach((text) => text.getAttribute("id"));
+
+function textActive() {
+  texts.forEach((text) => text.classList.remove("active-text"));
+  let current = this.getAttribute("data-id");
+  document
+    .querySelector(".testimonial .text[id*=" + current + "]")
+    .classList.add("active-text");
+}
+
+cardsTest.forEach((card) => card.addEventListener("click", textActive));
+
+
+// Typed.js ==========
+var typed = new Typed("#typed", {
+  strings: ["Web Developer", "Designer", "Photographer"],
+  typeSpeed: 70,
+  backSpeed: 100,
+  backDelay: 700,
+  loop: true,
+});
+
+// menu bar 
+let menuBar = document.querySelector(".menu-bar");
+let navMenu = document.querySelector(".nav-menu");
+
+menuBar.addEventListener('click', () => {
+  navMenu.classList.toggle('menu-active');
+})
