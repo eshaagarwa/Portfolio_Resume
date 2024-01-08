@@ -95,8 +95,7 @@ section {
 header {
     width: 100%;
     position: fixed; 
-    width: 100%;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
     z-index: 1000;
 }
@@ -105,7 +104,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: 10px 0;
     width: 100%;
 }
 
@@ -199,7 +198,7 @@ header {
 /* ============ home ============ */
 .home {
     margin: 0;
-    height: 100vh;
+    height: 100%;
 }
 
 .home .container {
