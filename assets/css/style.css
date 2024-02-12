@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --main-color: #2BD984;
-    --title-color: #242329;
-    --description-color: #454545;
-    --light-color: #BABABA;
-    --bg-light: #F9F9F9;
+    --main-color: #e8e427;
+    --title-color: #f1f0f8;
+    --description-color: #f1f1f1;
+    --light-color:rgb(192, 192, 206);
+    --bg-light:#F9F9F9;
 }
 
 * {
@@ -21,6 +21,7 @@ html {
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--title-color);
+    background-color:rgb(22, 22, 42);
 }
 
 h1,
@@ -94,18 +95,24 @@ section {
 
 header {
     width: 100%;
-    position: fixed; 
-    background-color: #ffffff;
+    position:fixed; 
+    background-color:rgb(22, 22, 42);
     box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
     z-index: 1000;
+    min-width: none;
+}
+.header_container
+{
+    position:relative;
 }
 
 .header_content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 2px 0;
     width: 100%;
+    height: 100px;
 }
 
 .header_content img {
@@ -237,7 +244,7 @@ header {
 }
 
 .content_home .right-details > img {
-    width: 620px;
+    width: 520px;
 }
 
 .content_home .right-details .img-tools img {
@@ -1152,7 +1159,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #a4cbcc;
     padding: 20px;
     line-height: 20px;
     font-size: 14px;
@@ -1441,7 +1448,7 @@ header {
 /* ============= footer ============== */
 footer {
     padding: 30px 0;
-    background: #e7fff3;
+    background: rgb(22, 22, 42);
 }
 footer .list {
     display: flex;
