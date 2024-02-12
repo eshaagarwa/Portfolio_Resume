@@ -657,7 +657,7 @@ header {
 }
 
 .resume .container .sidebar {
-    background: var(--bg-light);
+    background: rgb(114, 168, 182);
     height: 280px;
     padding: 50px 50px;
     border-radius: 20px;
@@ -706,7 +706,7 @@ header {
 
 .resume .main-content .box {
     position: relative;
-    background: var(--bg-light);
+    background: rgb(114, 168, 182);
     padding: 30px 50px 30px 130px;
     border-radius: 20px;
     margin-bottom: 25px;
@@ -716,11 +716,11 @@ header {
 
 .resume .main-content .box:hover {
     background: var(--main-color);
-    color: #fff;
+    color: #ffffff;
 }
 
 .resume .main-content .box:hover p {
-    color: #fff;
+    color: #fafdfd;
     transition: .5s;
 }
 
@@ -734,7 +734,7 @@ header {
     height: 50px;
     border-radius: 50%;
     background-color: var(--main-color);
-    color: #fff;
+    color: #9ccad5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -743,7 +743,7 @@ header {
 }
 
 .resume .main-content .box:hover::before {
-    background: #fff;
+    background: #fbfeff;
     color: var(--main-color);
 }
 
@@ -859,7 +859,7 @@ header {
 
 .services .container .box {
     width: 270px;
-    background: var(--bg-light);
+    background: rgb(114, 168, 182);
     padding: 40px;
     padding-top: 80px;
     padding-right: 15px;
