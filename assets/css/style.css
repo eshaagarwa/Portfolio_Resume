@@ -420,7 +420,7 @@ header {
     position: absolute;
     width: 170px;
     height: 80px;
-    background-color: #fff;
+    background-color: #000000;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -587,7 +587,7 @@ header {
 }
 
 .active-portfolio {
-    background: var(--main-color) !important;
+    background: var(white) !important;
     border-radius: 10px;
     color: #fff;
 }
@@ -615,7 +615,7 @@ header {
 }
 
 .portfolio-item .item-content {
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(23, 21, 21, 0.54);
     width: 100%;
     height: 100%;
     position: absolute;
